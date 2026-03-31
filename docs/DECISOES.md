@@ -100,6 +100,51 @@
 
 ---
 
+### [22:30] Fase 2 — Editor implementado (completo)
+
+**Contexto:** Fase 2 na branch `feat/fase-2-editor`.
+
+**Decisão:** Editor construído sem bibliotecas externas (sem dnd-kit, sem form library). Upload de screenshot usa object URL em memória durante a sessão + nome de arquivo no JSON para persistência futura. Persistência via localStorage com seed dos dados originais no primeiro acesso. Drag-and-drop de reordenação usa HTML5 nativo.
+
+**O que foi construído:**
+- `useJourneys.js` — hook com CRUD completo e localStorage, incluindo `moveStep`
+- `JourneyEditor.jsx` — modal de criar/editar jornada com picker de emoji
+- `StepEditor.jsx` — formulário inline com upload drag-and-drop de screenshot
+- `Timeline.jsx` — modo edição com botões inline, confirmação de exclusão, drag-and-drop nativo para reordenar, handle de 6 pontos na coluna central
+- B-001, B-002, B-003, B-004, B-005, B-006 marcados como concluídos no backlog
+
+**Fase 2 concluída.** Próxima fase: B-013/B-014 (export/import JSON), B-009/B-010 (mapeamento de impacto UI).
+
+---
+
+### [2026-03-31] Trilha de humor do cliente
+
+**Contexto:** Rodrigo pediu uma coluna visual à esquerda da lane do cliente mostrando o estado emocional do cliente em cada step. Deve ser editável diretamente na trilha, sem abrir o StepEditor.
+
+**Decisão:** Nova coluna de 44px (`gridTemplateColumns: "44px 1fr 44px 1fr"`) à esquerda da lane do cliente. Componente `MoodCell` com:
+- Viewer: emoji do humor com tooltip da nota. Ponto discreto se vazio.
+- Edit mode: botão circular que abre popover inline com grid 5×2 de emojis, label do humor selecionado, textarea para descrição e botões Salvar / Limpar / ✕.
+- Steps BHub: apenas linha de passagem (trilha continua sem nó).
+- Dados: campos `moodEmoji` e `moodNote` no objeto step.
+
+**Por que esse caminho:** Popover inline diretamente na trilha mantém o fluxo de edição rápido, sem abrir modal completo. Seleção toggleável (clicar no emoji selecionado desmarca).
+
+**Impacto:** Header e grid de cada step atualizados para 4 colunas. Build: 258KB (+5KB pela feature).
+
+---
+
+### [22:35] Fix UX — barra de ações do modo edição
+
+**Contexto:** Em modo edição, o botão "✏ Editar" era posicionado com `position: absolute, top: 8, left: 8` dentro do card do cliente. Isso sobrepunha o label "Passo N" que ocupa a mesma posição, criando sobreposição visual de texto.
+
+**Decisão:** Remover os botões absolutos injetados dentro dos cards. Substituir por uma barra de ações fina acima de cada step (fora dos cards), com drag handle + título do step (subdued) à esquerda e botão "✏ Editar" à direita.
+
+**Por que esse caminho:** Cards permanecem completamente limpos e legíveis em qualquer modo. Ações de edição ficam em área dedicada e nunca conflitam com conteúdo dos cards.
+
+**Impacto:** Modo edição mais legível. Comportamento de drag-and-drop inalterado.
+
+---
+
 ### [22:10] Regra de git — nunca autônomo
 
 **Contexto:** Durante a execução da Fase 1 em auto mode, foram feitos commit e criação de branch sem pedido explícito.
