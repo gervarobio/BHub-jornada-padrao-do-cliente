@@ -1,13 +1,49 @@
 import { useState } from "react";
 import Sidebar from "./components/Sidebar";
 import Timeline from "./components/Timeline";
-import journeysData from "./data/journeys.json";
+import JourneyEditor from "./components/editor/JourneyEditor";
+import { useJourneys } from "./hooks/useJourneys";
 
 export default function App() {
-  const [selectedId, setSelectedId] = useState("envio-email-ideal");
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const {
+    journeys,
+    createJourney, updateJourney, deleteJourney,
+    addStep, updateStep, deleteStep,
+  } = useJourneys();
 
-  const journey = journeysData.find((j) => j.id === selectedId) || null;
+  const [selectedId, setSelectedId]           = useState("envio-email-ideal");
+  const [sidebarOpen, setSidebarOpen]         = useState(true);
+  const [editMode, setEditMode]               = useState(false);
+  const [editingJourney, setEditingJourney]   = useState(false);
+  const [creatingJourney, setCreatingJourney] = useState(false);
+
+  const journey = journeys.find((j) => j.id === selectedId) || null;
+
+  const handleCreateJourney = (fields) => {
+    const id = createJourney(fields);
+    setSelectedId(id);
+    setCreatingJourney(false);
+    setEditMode(true);
+  };
+
+  const handleUpdateJourney = (fields) => {
+    updateJourney(selectedId, fields);
+    setEditingJourney(false);
+  };
+
+  const handleDeleteJourney = () => {
+    deleteJourney(selectedId);
+    const next = journeys.find((j) => j.id !== selectedId);
+    setSelectedId(next?.id || null);
+    setEditingJourney(false);
+    setEditMode(false);
+  };
+
+  const handleSelectJourney = (id) => {
+    setSelectedId(id);
+    setEditMode(false);
+    setEditingJourney(false);
+  };
 
   return (
     <div style={{
@@ -21,21 +57,78 @@ export default function App() {
       />
 
       <Sidebar
-        journeys={journeysData}
+        journeys={journeys}
         selectedId={selectedId}
-        onSelect={setSelectedId}
+        onSelect={handleSelectJourney}
         isOpen={sidebarOpen}
         onToggle={() => setSidebarOpen((v) => !v)}
+        onNewJourney={() => setCreatingJourney(true)}
       />
 
-      {/* Área principal */}
       <div style={{ flex: 1, overflow: "auto" }}>
+        {/* Modal: Nova jornada */}
+        {creatingJourney && (
+          <div
+            style={{
+              position: "fixed", inset: 0, zIndex: 100,
+              background: "rgba(0,0,0,0.7)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              padding: 24,
+            }}
+            onClick={() => setCreatingJourney(false)}
+          >
+            <div style={{ width: "100%", maxWidth: 560 }} onClick={(e) => e.stopPropagation()}>
+              <JourneyEditor
+                journey={null}
+                onSave={handleCreateJourney}
+                onCancel={() => setCreatingJourney(false)}
+                isNew
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Modal: Editar metadados */}
+        {editingJourney && journey && (
+          <div
+            style={{
+              position: "fixed", inset: 0, zIndex: 100,
+              background: "rgba(0,0,0,0.7)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              padding: 24,
+            }}
+            onClick={() => setEditingJourney(false)}
+          >
+            <div style={{ width: "100%", maxWidth: 560 }} onClick={(e) => e.stopPropagation()}>
+              <JourneyEditor
+                journey={journey}
+                onSave={handleUpdateJourney}
+                onCancel={() => setEditingJourney(false)}
+                onDelete={handleDeleteJourney}
+                isNew={false}
+              />
+            </div>
+          </div>
+        )}
+
         {!journey ? (
-          <EmptyState />
+          <EmptyState onNew={() => setCreatingJourney(true)} />
         ) : (
           <div style={{ padding: "28px 24px 80px" }}>
-            <JourneyHeader journey={journey} />
-            <Timeline journey={journey} />
+            <JourneyHeader
+              journey={journey}
+              editMode={editMode}
+              onToggleEdit={() => setEditMode((v) => !v)}
+              onEditMeta={() => setEditingJourney(true)}
+            />
+            <Timeline
+              journey={journey}
+              editMode={editMode}
+              onAddStep={(data) => addStep(selectedId, data)}
+              onUpdateStep={(i, data) => updateStep(selectedId, i, data)}
+              onDeleteStep={(i) => deleteStep(selectedId, i)}
+              onMoveStep={(from, to) => moveStep(selectedId, from, to)}
+            />
           </div>
         )}
       </div>
@@ -49,12 +142,13 @@ export default function App() {
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 3px; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        select option { background: #1A2332; }
       `}</style>
     </div>
   );
 }
 
-function JourneyHeader({ journey }) {
+function JourneyHeader({ journey, editMode, onToggleEdit, onEditMeta }) {
   return (
     <div style={{ maxWidth: 940, margin: "0 auto 24px", textAlign: "center" }}>
       {journey.isIdeal && (
@@ -82,8 +176,7 @@ function JourneyHeader({ journey }) {
       </div>
 
       <h1 style={{
-        fontSize: 25, fontWeight: 700, lineHeight: 1.2,
-        marginBottom: 6,
+        fontSize: 25, fontWeight: 700, lineHeight: 1.2, marginBottom: 6,
         background: journey.isIdeal
           ? "linear-gradient(135deg, #6EE7B7, #34D399)"
           : "linear-gradient(135deg, #93C5FD, #60A5FA)",
@@ -110,7 +203,6 @@ function JourneyHeader({ journey }) {
         {journey.description}
       </p>
 
-      {/* Legenda de feedback (só na jornada ideal) */}
       {journey.isIdeal && (
         <div style={{
           display: "flex", gap: 10, justifyContent: "center",
@@ -135,11 +227,39 @@ function JourneyHeader({ journey }) {
           ))}
         </div>
       )}
+
+      <div style={{ display: "flex", gap: 8, justifyContent: "center", marginTop: 18 }}>
+        {editMode && (
+          <button
+            onClick={onEditMeta}
+            style={{
+              padding: "7px 16px", borderRadius: 8, fontSize: 12, fontWeight: 600,
+              background: "rgba(255,255,255,0.04)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              color: "#94A3B8", cursor: "pointer", fontFamily: "inherit",
+            }}
+          >
+            ✏ Editar título e info
+          </button>
+        )}
+        <button
+          onClick={onToggleEdit}
+          style={{
+            padding: "7px 18px", borderRadius: 8, fontSize: 12, fontWeight: 600,
+            background: editMode ? "rgba(34,197,94,0.1)" : "rgba(30,144,255,0.1)",
+            border: `1px solid ${editMode ? "rgba(34,197,94,0.3)" : "rgba(30,144,255,0.3)"}`,
+            color: editMode ? "#4ADE80" : "#60A5FA",
+            cursor: "pointer", fontFamily: "inherit", transition: "all 0.2s",
+          }}
+        >
+          {editMode ? "✓ Modo edição ativo" : "✏ Editar jornada"}
+        </button>
+      </div>
     </div>
   );
 }
 
-function EmptyState() {
+function EmptyState({ onNew }) {
   return (
     <div style={{
       display: "flex", flexDirection: "column",
@@ -149,9 +269,20 @@ function EmptyState() {
       <h1 style={{ fontSize: 23, fontWeight: 700, color: "#CBD5E1" }}>
         Mapa de Jornadas BHub
       </h1>
-      <p style={{ color: "#4A6A8A", fontSize: 14, marginTop: 8 }}>
-        Selecione uma jornada na lateral.
+      <p style={{ color: "#4A6A8A", fontSize: 14, marginTop: 8, marginBottom: 20 }}>
+        Selecione uma jornada na lateral ou crie uma nova.
       </p>
+      <button
+        onClick={onNew}
+        style={{
+          padding: "10px 24px", borderRadius: 8, fontSize: 13, fontWeight: 600,
+          background: "rgba(30,144,255,0.1)",
+          border: "1px solid rgba(30,144,255,0.3)",
+          color: "#60A5FA", cursor: "pointer", fontFamily: "inherit",
+        }}
+      >
+        + Nova jornada
+      </button>
     </div>
   );
 }

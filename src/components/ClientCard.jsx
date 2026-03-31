@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ScreenshotViewer from "./ScreenshotViewer";
+import { resolveScreenshotUrl } from "../hooks/useJourneys";
 
 const FEEDBACK_STYLES = {
   info:    { icon: "📨", color: "#60A5FA", bg: "rgba(96,165,250,0.10)",  label: "Comunicação recebida" },
@@ -11,7 +12,7 @@ const FEEDBACK_STYLES = {
 export default function ClientCard({ step, isExpanded, onClick }) {
   const [viewingScreenshot, setViewingScreenshot] = useState(false);
 
-  const screenshotSrc = step.screenshot ? `/screenshots/${step.screenshot}` : null;
+  const screenshotSrc = resolveScreenshotUrl(step.screenshot);
   const fb = step.isFeedback ? FEEDBACK_STYLES[step.feedbackType] : null;
   const accentColor = fb ? fb.color : "#2E6B9E";
 
