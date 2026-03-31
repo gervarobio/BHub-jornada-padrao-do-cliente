@@ -100,6 +100,36 @@
 
 ---
 
+### [22:10] Regra de git — nunca autônomo
+
+**Contexto:** Durante a execução da Fase 1 em auto mode, foram feitos commit e criação de branch sem pedido explícito.
+
+**Decisão:** Nenhuma operação git (commit, branch, merge, PR, push) deve ser executada sem instrução explícita do Rodrigo. Isso vale mesmo em auto mode e mesmo que pareça conveniente.
+
+**Impacto:** Rodrigo mantém controle total do histórico git. Após qualquer mudança de código, o trabalho para — mostra o resultado e aguarda instrução.
+
+---
+
+### [22:05] Fontes aumentadas em +1pt em todo o projeto
+
+**Contexto:** Fontes do viewer estavam pequenas demais para leitura confortável.
+
+**Decisão:** Todos os valores de `fontSize` em todos os 7 componentes incrementados em +1 via script Python. 62 ocorrências atualizadas.
+
+**Impacto:** Escala de fontes passou de {7–24} para {8–25}.
+
+---
+
+### [22:00] Backlog ganhou Grupo 6 (B-018 a B-020) — adicionado em outro chat
+
+**Contexto:** Rodrigo adicionou via outro chat um novo grupo de features focadas em transformar jornadas em artefatos úteis para produto e desenvolvimento.
+
+**Decisão:** PRD v0.3 criado para absorver as novas features. Fase 5 adicionada para B-020 (integração com repositórios). Pergunta aberta registrada sobre abordagem do B-020.
+
+**Impacto:** Roadmap agora vai até Fase 5. Features de documentação e prototipação fazem parte do escopo oficial.
+
+---
+
 ### [21:45] Fase 1 — Viewer implementado
 
 **Contexto:** Início do desenvolvimento real. Projeto React/Vite criado e Fase 1 (viewer) construída do zero.

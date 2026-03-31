@@ -22,7 +22,7 @@ export default function ScreenshotViewer({ src, caption, onClose }) {
       />
       {caption && (
         <div style={{
-          marginTop: 14, color: "#94A3B8", fontSize: 12,
+          marginTop: 14, color: "#94A3B8", fontSize: 13,
           fontFamily: "'Space Mono', monospace",
         }}>
           {caption}

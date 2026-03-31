@@ -30,7 +30,7 @@ export default function Timeline({ journey }) {
           textAlign: "right",
         }}>
           <span style={{
-            fontSize: 10, fontWeight: 700, textTransform: "uppercase",
+            fontSize: 11, fontWeight: 700, textTransform: "uppercase",
             letterSpacing: "0.12em", color: "#2E6B9E",
             fontFamily: "'Space Mono', monospace",
           }}>
@@ -44,7 +44,7 @@ export default function Timeline({ journey }) {
           borderBottom: "1px solid rgba(124,58,237,0.2)",
         }}>
           <span style={{
-            fontSize: 10, fontWeight: 600, textTransform: "uppercase",
+            fontSize: 11, fontWeight: 600, textTransform: "uppercase",
             letterSpacing: "0.12em", color: "#64748B",
             fontFamily: "'Space Mono', monospace",
           }}>
@@ -69,14 +69,14 @@ export default function Timeline({ journey }) {
           nodeContent = "⑂";
           nodeStyle = {
             width: 24, height: 24, borderRadius: 6,
-            background: "none", fontSize: 18, color: "#F59E0B",
+            background: "none", fontSize: 19, color: "#F59E0B",
             display: "flex", alignItems: "center", justifyContent: "center",
             flexShrink: 0, zIndex: 1,
           };
         } else if (isClient && fb && !isNumbered) {
           nodeContent = fb.icon;
           nodeStyle = {
-            width: 24, height: 24, background: "none", fontSize: 16,
+            width: 24, height: 24, background: "none", fontSize: 17,
             display: "flex", alignItems: "center", justifyContent: "center",
             flexShrink: 0, zIndex: 1,
           };
@@ -88,7 +88,7 @@ export default function Timeline({ journey }) {
             background: fb ? fb.color : "#2E6B9E",
             boxShadow: `0 0 14px ${fb ? fb.color + "44" : "rgba(46,107,158,0.4)"}`,
             display: "flex", alignItems: "center", justifyContent: "center",
-            fontSize: 12, fontWeight: 700, color: "#fff",
+            fontSize: 13, fontWeight: 700, color: "#fff",
             flexShrink: 0, zIndex: 1,
           };
         } else if (!isClient) {
@@ -101,7 +101,7 @@ export default function Timeline({ journey }) {
         } else {
           nodeContent = "•";
           nodeStyle = {
-            width: 24, height: 24, background: "none", fontSize: 18, color: "#2E6B9E",
+            width: 24, height: 24, background: "none", fontSize: 19, color: "#2E6B9E",
             display: "flex", alignItems: "center", justifyContent: "center",
             flexShrink: 0, zIndex: 1,
           };

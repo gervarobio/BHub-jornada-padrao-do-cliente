@@ -63,7 +63,7 @@ function JourneyHeader({ journey }) {
           padding: "5px 14px", borderRadius: 20,
           background: "rgba(52,211,153,0.08)",
           border: "1px solid rgba(52,211,153,0.2)",
-          fontSize: 11, color: "#34D399", fontWeight: 600,
+          fontSize: 12, color: "#34D399", fontWeight: 600,
           marginBottom: 10,
         }}>
           ✨ Jornada Ideal — Proposta
@@ -72,17 +72,17 @@ function JourneyHeader({ journey }) {
 
       <div style={{
         display: "flex", alignItems: "center", justifyContent: "center",
-        gap: 6, fontSize: 10, fontWeight: 600,
+        gap: 6, fontSize: 11, fontWeight: 600,
         textTransform: "uppercase", letterSpacing: "0.12em",
         color: "#4A6A8A", marginBottom: 8,
         fontFamily: "'Space Mono', monospace",
       }}>
-        <span style={{ fontSize: 15 }}>{journey.icon}</span>
+        <span style={{ fontSize: 16 }}>{journey.icon}</span>
         {journey.category}
       </div>
 
       <h1 style={{
-        fontSize: 24, fontWeight: 700, lineHeight: 1.2,
+        fontSize: 25, fontWeight: 700, lineHeight: 1.2,
         marginBottom: 6,
         background: journey.isIdeal
           ? "linear-gradient(135deg, #6EE7B7, #34D399)"
@@ -95,7 +95,7 @@ function JourneyHeader({ journey }) {
 
       {journey.subtitle && (
         <p style={{
-          color: "#64748B", fontSize: 12,
+          color: "#64748B", fontSize: 13,
           fontFamily: "'Space Mono', monospace",
           letterSpacing: "0.04em", marginBottom: 8,
         }}>
@@ -104,7 +104,7 @@ function JourneyHeader({ journey }) {
       )}
 
       <p style={{
-        color: "#64748B", fontSize: 13, lineHeight: 1.6,
+        color: "#64748B", fontSize: 14, lineHeight: 1.6,
         maxWidth: 600, margin: "0 auto",
       }}>
         {journey.description}
@@ -124,7 +124,7 @@ function JourneyHeader({ journey }) {
           ].map((item) => (
             <div key={item.label} style={{
               display: "flex", alignItems: "center", gap: 5,
-              fontSize: 10, color: item.color,
+              fontSize: 11, color: item.color,
               background: item.color + "12",
               padding: "3px 10px", borderRadius: 20,
               border: `1px solid ${item.color}20`,
@@ -146,10 +146,10 @@ function EmptyState() {
       alignItems: "center", justifyContent: "center",
       height: "100%", padding: 40, textAlign: "center",
     }}>
-      <h1 style={{ fontSize: 22, fontWeight: 700, color: "#CBD5E1" }}>
+      <h1 style={{ fontSize: 23, fontWeight: 700, color: "#CBD5E1" }}>
         Mapa de Jornadas BHub
       </h1>
-      <p style={{ color: "#4A6A8A", fontSize: 13, marginTop: 8 }}>
+      <p style={{ color: "#4A6A8A", fontSize: 14, marginTop: 8 }}>
         Selecione uma jornada na lateral.
       </p>
     </div>

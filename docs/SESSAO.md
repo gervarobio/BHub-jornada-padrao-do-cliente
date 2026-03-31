@@ -15,8 +15,8 @@ A ferramenta terá dois modos: **viewer** (navegar jornadas existentes) e **edit
 
 ## Estado atual
 
-**Fase:** Fase 1 concluída — Viewer funcional, rodando em desenvolvimento.
-**Branch ativa:** `feat/fase-1-viewer`
+**Fase:** Fase 1 concluída — Viewer funcional. Aguardando início da Fase 2.
+**Branch ativa:** `feat/fase-1-viewer` (não mergeada — aguarda pedido explícito)
 
 **O que existe:**
 - `docs/` — PRD v0.2, Backlog, Decisões, Sessão
@@ -38,6 +38,9 @@ A ferramenta terá dois modos: **viewer** (navegar jornadas existentes) e **edit
 - Upload de screenshot (B-003)
 - Mapeamento de impacto na UI (Fase 3: B-009 a B-011)
 - Export/Import JSON (Fase 3: B-013 a B-015)
+- Export como documento de requisitos (Fase 3: B-018)
+- Protótipo navegável (Fase 4: B-019)
+- Integração com repositórios (Fase 5: B-020)
 
 ---
 
@@ -73,7 +76,7 @@ Fluxo sugerido:
 - Imagens: arquivos em `/public/screenshots/`, não base64
 - Busca: TF-IDF local no MVP (API Claude como upgrade futuro)
 - Impacto: detecção por regras simples no MVP (análise semântica como upgrade futuro)
-- Git: nunca fazer commit/PR/branch sem pedido explícito do Rodrigo
+- Git: **nunca** fazer commit, merge, PR ou criar branch sem pedido explícito — nem em auto mode
 
 ---
 

@@ -19,8 +19,8 @@ export default function BranchView({ branches }) {
           <div style={{
             display: "flex", alignItems: "center", gap: 6, marginBottom: 10,
           }}>
-            <span style={{ fontSize: 16 }}>{b.icon}</span>
-            <span style={{ fontSize: 12, fontWeight: 700, color: b.color }}>
+            <span style={{ fontSize: 17 }}>{b.icon}</span>
+            <span style={{ fontSize: 13, fontWeight: 700, color: b.color }}>
               {b.title}
             </span>
           </div>
@@ -28,8 +28,8 @@ export default function BranchView({ branches }) {
             <div key={i} style={{
               display: "flex", gap: 8, marginBottom: 7, alignItems: "flex-start",
             }}>
-              <span style={{ color: b.color, fontSize: 10, marginTop: 1 }}>›</span>
-              <div style={{ fontSize: 11, color: "#CBD5E1", lineHeight: 1.5 }}>{s}</div>
+              <span style={{ color: b.color, fontSize: 11, marginTop: 1 }}>›</span>
+              <div style={{ fontSize: 12, color: "#CBD5E1", lineHeight: 1.5 }}>{s}</div>
             </div>
           ))}
         </div>

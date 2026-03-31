@@ -22,11 +22,11 @@ export default function BHubCard({ step, isExpanded, onClick }) {
           e.currentTarget.style.borderColor = "rgba(255,255,255,0.04)";
         }}
       >
-        <span style={{ fontSize: 12, fontWeight: 600, color: "#64748B", flex: 1 }}>
+        <span style={{ fontSize: 13, fontWeight: 600, color: "#64748B", flex: 1 }}>
           {step.title}
         </span>
         <span style={{
-          fontSize: 8, padding: "2px 6px", borderRadius: 8,
+          fontSize: 9, padding: "2px 6px", borderRadius: 8,
           background: "rgba(124,58,237,0.08)", color: "#7C3AED", fontWeight: 600,
         }}>
           {step.channel}
@@ -50,9 +50,9 @@ export default function BHubCard({ step, isExpanded, onClick }) {
         display: "flex", alignItems: "center",
         justifyContent: "space-between", marginBottom: 6,
       }}>
-        <span style={{ fontSize: 13, fontWeight: 700 }}>{step.title}</span>
+        <span style={{ fontSize: 14, fontWeight: 700 }}>{step.title}</span>
         <span style={{
-          fontSize: 8, padding: "2px 6px", borderRadius: 8,
+          fontSize: 9, padding: "2px 6px", borderRadius: 8,
           background: "rgba(124,58,237,0.15)", color: "#A78BFA", fontWeight: 600,
         }}>
           {step.channel}
@@ -62,7 +62,7 @@ export default function BHubCard({ step, isExpanded, onClick }) {
       <div style={{ animation: "fadeIn 0.3s ease" }}>
         {step.description && (
           <p style={{
-            fontSize: 12, color: "#94A3B8", lineHeight: 1.7, marginBottom: 8,
+            fontSize: 13, color: "#94A3B8", lineHeight: 1.7, marginBottom: 8,
           }}>
             {step.description}
           </p>
@@ -76,10 +76,10 @@ export default function BHubCard({ step, isExpanded, onClick }) {
             border: "1px dashed rgba(251,191,36,0.2)",
             background: "rgba(251,191,36,0.03)",
           }}>
-            <div style={{ fontSize: 10, color: "#FBBF24", fontWeight: 600, marginBottom: 3 }}>
+            <div style={{ fontSize: 11, color: "#FBBF24", fontWeight: 600, marginBottom: 3 }}>
               🖼️ Tela sugerida
             </div>
-            <div style={{ fontSize: 10, color: "#92700C", lineHeight: 1.5 }}>
+            <div style={{ fontSize: 11, color: "#92700C", lineHeight: 1.5 }}>
               {step.suggestedScreenNote}
             </div>
           </div>
@@ -87,7 +87,7 @@ export default function BHubCard({ step, isExpanded, onClick }) {
 
         <div style={{
           display: "inline-flex", padding: "3px 8px",
-          borderRadius: 5, background: "rgba(0,0,0,0.2)", fontSize: 10,
+          borderRadius: 5, background: "rgba(0,0,0,0.2)", fontSize: 11,
         }}>
           <span style={{ color: "#4A6A8A" }}>Responsável:&nbsp;</span>
           <span style={{ color: "#A78BFA", fontWeight: 600 }}>{step.who}</span>
@@ -98,7 +98,7 @@ export default function BHubCard({ step, isExpanded, onClick }) {
             marginTop: 8, padding: "6px 10px", borderRadius: 5,
             background: "rgba(234,179,8,0.04)",
             borderLeft: "2px solid rgba(234,179,8,0.3)",
-            fontSize: 10, color: "#92700C", lineHeight: 1.6,
+            fontSize: 11, color: "#92700C", lineHeight: 1.6,
           }}>
             {step.tip}
           </div>
