@@ -1,10 +1,12 @@
 # PRD — Mapa de Jornadas Padrão BHub
 
 **Status:** Rascunho
-**Versão:** 0.2
+**Versão:** 0.3
 **Última atualização:** 2026-03-30
 **Responsável:** Rodrigo
 
+> **Changelog v0.3:** Adicionado Grupo 6 — Documentação e Prototipação (B-018 a B-020). Fase 5 adicionada. Novo item em perguntas abertas (abordagem B-020). Ajuste de fonte (+1pt) registrado nas decisões técnicas.
+>
 > **Changelog v0.2:** Adicionadas seções de busca por intenção, mapeamento de impacto e arquitetura em camadas — alinhado com backlog (B-007 a B-012). Upload de screenshot detalhado. Fase 4 adicionada. Decisões técnicas registradas.
 
 ---
@@ -113,6 +115,17 @@ A ferramenta mantém um índice de relacionamentos baseado em correspondência d
 - **Modo visão geral:** visualização compacta de todos os steps sem expandir, para leitura rápida do fluxo completo
 - **Grafo de relacionamentos:** visão em grafo mostrando quais jornadas estão conectadas e por quê (canal em comum, step compartilhado, sequência natural)
 - **Destaque de steps relevantes:** ao navegar para uma jornada via busca, os steps que mais correspondem à query ficam visualmente destacados
+
+### 5.6 Documentação e prototipação (Fase 3–5)
+
+**Export como documento de requisitos (B-018 — Fase 3)**
+A partir de uma jornada aberta, gera um documento `.md` estruturado com: visão geral, lista de telas necessárias por step (screenshots existentes + `suggestedScreenNote`), requisitos funcionais por etapa, canais, responsáveis e pontos de atenção. Útil como especificação para o time de desenvolvimento ou insumo para protótipo.
+
+**Protótipo navegável (B-019 — Fase 4)**
+Gera um `.html` standalone e navegável a partir dos steps e screenshots de uma jornada. Steps com screenshot mostram a imagem como "tela"; steps com `suggestedScreenNote` mostram placeholder. Navegação por botões e teclado. Ramificações exibem escolha entre caminhos. Útil para validação com cliente ou alinhamento operacional.
+
+**Integração com repositórios BHub (B-020 — Fase 5)**
+Conecta steps a telas ou features implementadas nos repositórios da BHub, permitindo visualizar o que já existe no produto vs. lacunas. Abordagem a definir: link manual, integração GitHub API ou export para ferramenta de design (Figma/Excalidraw).
 
 ---
 
@@ -255,18 +268,23 @@ Isso garante que a troca de mecanismo não afeta os componentes de UI — apenas
 - Export como HTML standalone
 - **Critério de aceite:** edita canal de um step e a ferramenta lista outras jornadas que usam o mesmo canal; exporta e importa sem perda
 
-### Fase 4 — Visões avançadas
+### Fase 4 — Visões avançadas e prototipação
 - Modo visão geral (steps compactos)
 - Grafo visual de relacionamentos
 - Destaque de steps no resultado de busca
+- Protótipo navegável HTML (B-019)
 - Upgrade da busca para Claude API (opcional)
 - Upgrade da análise de impacto para Claude API (opcional)
+
+### Fase 5 — Integração com produto
+- Integração com repositórios BHub para mapeamento de implementação (B-020)
+- Abordagem a definir: link manual, GitHub API ou export para design
 
 ---
 
 ## 10. Perguntas abertas
 
-1. **Screenshots existentes:** as 7 imagens do protótipo (TELA1–TELA7) precisam ser extraídas do base64 e salvas como arquivos. Quem faz isso — ferramenta ou manual?
-2. **Jornadas prioritárias:** quais jornadas além das 6 do protótipo devem ser documentadas primeiro?
-3. **Onde a ferramenta roda:** local em cada máquina ou hospedada? Isso impacta onde os JSONs e screenshots ficam e como colaboração funciona.
-4. **Nomenclatura de categorias:** Rotina Mensal, Departamento Pessoal, Financeiro, Cadastro — cobre os casos de uso previstos?
+1. **Jornadas prioritárias:** quais jornadas além das 6 do protótipo devem ser documentadas primeiro?
+2. **Onde a ferramenta roda:** local em cada máquina ou hospedada? Isso impacta onde os JSONs e screenshots ficam e como colaboração funciona.
+3. **Nomenclatura de categorias:** Rotina Mensal, Departamento Pessoal, Financeiro, Cadastro — cobre os casos de uso previstos?
+4. **B-020 — Abordagem de integração com repositórios:** link manual no editor de step, integração via GitHub API, ou export para Figma/Excalidraw? Define escopo e complexidade da Fase 5.

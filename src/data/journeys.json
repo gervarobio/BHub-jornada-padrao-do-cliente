@@ -1,0 +1,530 @@
+[
+  {
+    "id": "envio-email-ideal",
+    "category": "Rotina Mensal",
+    "icon": "✉️",
+    "title": "Envio de Documentos por E-mail (Jornada Ideal)",
+    "subtitle": "Como deveria funcionar o envio de documentos por e-mail de ponta a ponta",
+    "description": "Jornada alvo para o cliente que envia documentos por e-mail. Um ponto de entrada, triagem automática, feedback centralizado. Inclui ramificação entre documentos aceitos e rejeitados.",
+    "isIdeal": true,
+    "steps": [
+      {
+        "label": "Gatilho",
+        "title": "Recebe lembrete mensal",
+        "who": "BHub (automação)",
+        "channel": "E-mail / WhatsApp",
+        "side": "client",
+        "isFeedback": true,
+        "feedbackType": "info",
+        "description": "Antes do prazo, o cliente recebe um lembrete proativo com a lista exata do que precisa enviar naquele mês — por conta bancária, com prazo e endereço de envio.",
+        "tip": "Problema atual: o cliente descobre que precisa enviar apenas ao ver tarefas vencidas. Aqui, o lembrete chega ANTES.",
+        "suggestedScreen": true,
+        "suggestedScreenNote": "E-mail recebido pelo cliente: 'Envie os extratos de Jan/25 para: Nubank, Santander, C6. Prazo: 08/02. Envie para: docs-suaempresa@bhub.ai'"
+      },
+      {
+        "label": "Passo 1",
+        "title": "Envia documentos por e-mail",
+        "who": "Cliente",
+        "channel": "E-mail",
+        "side": "client",
+        "description": "O cliente envia os documentos como anexos para o e-mail dedicado (ex: docs-suaempresa@bhub.ai). Não precisa classificar, separar por conta ou formatar. Manda tudo junto.",
+        "tip": "O CLIENTE NÃO FAZ TRIAGEM. Manda tudo junto. Quem organiza é a BHub.",
+        "suggestedScreen": true,
+        "suggestedScreenNote": "E-mail do cliente: 'Extratos janeiro' com 5 PDFs e 2 OFX anexados"
+      },
+      {
+        "label": "Passo 2",
+        "title": "Recebe confirmação de recebimento",
+        "who": "BHub (automação)",
+        "channel": "E-mail (auto)",
+        "side": "client",
+        "isFeedback": true,
+        "feedbackType": "success",
+        "description": "Imediatamente após o envio, o cliente recebe: 'Recebemos seus documentos! Identificamos 7 arquivos (5 PDF, 2 OFX). Processamento iniciado.'",
+        "tip": "Elimina a ansiedade de 'será que chegou?'. Resposta em segundos.",
+        "suggestedScreen": true,
+        "suggestedScreenNote": "E-mail na caixa do cliente: 'Recebemos 7 arquivos. Processamento iniciado.'"
+      },
+      {
+        "label": "",
+        "title": "Triagem automática",
+        "who": "BHub (automação)",
+        "channel": "Interno",
+        "side": "bhub",
+        "description": "O sistema identifica o cliente, classifica cada documento (tipo + conta bancária), e armazena na pasta correta no GDocs. Tudo em segundos, sem ação humana.",
+        "tip": "Entrada única → triagem única → armazenamento único. Nenhum operador move arquivo manualmente.",
+        "suggestedScreen": true,
+        "suggestedScreenNote": "Dashboard de triagem: docs classificados por tipo e conta"
+      },
+      {
+        "label": "",
+        "title": "Validação pelo operador",
+        "who": "BHub (Contabilidade)",
+        "channel": "Interno",
+        "side": "bhub",
+        "description": "Operador acessa uma fila centralizada de documentos já triados. Ação binária: aprovar ou rejeitar com motivo.",
+        "tip": "Operador não classifica — só valida.",
+        "suggestedScreen": true,
+        "suggestedScreenNote": "Fila: cada doc com preview + 'Aprovar' / 'Rejeitar + motivo'"
+      },
+      {
+        "label": "Ramificação",
+        "title": "Resultado da validação por documento",
+        "who": "BHub (automação)",
+        "channel": "Interno",
+        "side": "bhub",
+        "isBranch": true,
+        "description": "Cada documento recebe um resultado individual. No mesmo envio, alguns podem ser aceitos e outros rejeitados:",
+        "branches": [
+          {
+            "id": "success",
+            "icon": "✅",
+            "title": "Documento aceito",
+            "color": "#22C55E",
+            "bg": "rgba(34,197,94,0.06)",
+            "borderColor": "rgba(34,197,94,0.25)",
+            "steps": [
+              "Status \"Concluído\" (verde)",
+              "Arquivo na pasta definitiva no GDocs",
+              "Conta bancária marcada como OK",
+              "Nenhuma ação do cliente necessária"
+            ]
+          },
+          {
+            "id": "error",
+            "icon": "❌",
+            "title": "Documento rejeitado",
+            "color": "#EF4444",
+            "bg": "rgba(239,68,68,0.06)",
+            "borderColor": "rgba(239,68,68,0.25)",
+            "steps": [
+              "Status \"Rejeitado\" (vermelho)",
+              "Motivo registrado (ilegível, período errado, formato inválido)",
+              "Arquivo em quarentena",
+              "Aciona feedback de erro para o cliente"
+            ]
+          }
+        ]
+      },
+      {
+        "label": "Passo 3",
+        "title": "Recebe feedback consolidado",
+        "who": "BHub (automação)",
+        "channel": "E-mail / Hub",
+        "side": "client",
+        "isFeedback": true,
+        "feedbackType": "mixed",
+        "description": "O cliente recebe UM feedback consolidado: aceitos (✅), rejeitados com motivo (❌), não recebidos (⏳). Se houver pendência, diz exatamente o que reenviar e para onde.",
+        "tip": "Feedback pelo MESMO canal: enviou por e-mail, recebe por e-mail. Tudo em UMA mensagem.",
+        "suggestedScreen": true,
+        "suggestedScreenNote": "'✅ Nubank PDF — aceito | ❌ C6 PDF — ilegível, reenvie | ⏳ BB — não recebido'"
+      },
+      {
+        "label": "Passo 4",
+        "title": "Corrige pendências (se houver)",
+        "who": "Cliente",
+        "channel": "E-mail (resposta)",
+        "side": "client",
+        "description": "O cliente RESPONDE o e-mail de feedback com os documentos corrigidos. Não precisa acessar outra tela — o sistema identifica que é uma correção pelo contexto do e-mail.",
+        "tip": "Correção = mesmo canal. Responder e-mail = reenviar.",
+        "suggestedScreen": true,
+        "suggestedScreenNote": "Reply do cliente: 'Segue C6 corrigido' com novo PDF"
+      },
+      {
+        "label": "Passo 5",
+        "title": "Recebe confirmação da correção",
+        "who": "BHub (automação)",
+        "channel": "E-mail (auto)",
+        "side": "client",
+        "isFeedback": true,
+        "feedbackType": "success",
+        "description": "'Recebemos 1 documento corrigido (C6 PDF). Será revalidado em até 24h.'",
+        "tip": "Cada reenvio gera confirmação.",
+        "suggestedScreen": true,
+        "suggestedScreenNote": "'Recebemos seu reenvio. C6 PDF em revalidação.'"
+      },
+      {
+        "label": "",
+        "title": "Revalidação dos documentos corrigidos",
+        "who": "BHub (Contabilidade)",
+        "channel": "Interno",
+        "side": "bhub",
+        "description": "Operador revalida apenas os documentos corrigidos na mesma fila. Se rejeitado novamente, novo feedback.",
+        "tip": "O loop se repete pelo mesmo fluxo."
+      },
+      {
+        "label": "Conclusão",
+        "title": "Recebe confirmação final",
+        "who": "BHub (automação)",
+        "channel": "E-mail / Hub",
+        "side": "client",
+        "isFeedback": true,
+        "feedbackType": "final",
+        "description": "Quando TODOS os documentos de TODAS as contas são validados: 'Todos os documentos de Jan/25 foram recebidos e validados! Fechamento em andamento.'",
+        "tip": "Ciclo: lembrete → envio → confirmação → triagem → feedback → correção → conclusão.",
+        "suggestedScreen": true,
+        "suggestedScreenNote": "'✅ Tudo certo! Fechamento em andamento.' Hub: tarefa Concluída."
+      }
+    ]
+  },
+  {
+    "id": "envio-fechamento",
+    "category": "Rotina Mensal",
+    "icon": "📤",
+    "title": "Envio de Documentos para Fechamento",
+    "subtitle": "Via Hub do Empreendedor (fluxo atual)",
+    "description": "Jornada atual de envio de extratos bancários pelo Hub do Empreendedor para o fechamento mensal.",
+    "isIdeal": false,
+    "steps": [
+      {
+        "label": "Passo 1",
+        "title": "Acessa o Hub do Empreendedor",
+        "who": "Cliente",
+        "channel": "Hub do Empreendedor",
+        "side": "client",
+        "description": "Cliente faz login no Hub do Empreendedor e visualiza as tarefas do mês na página inicial.",
+        "screenshot": "tela5.png",
+        "screenshotCaption": "Página inicial"
+      },
+      {
+        "label": "Passo 2",
+        "title": "Acessa a Central de Tarefas",
+        "who": "Cliente",
+        "channel": "Hub do Empreendedor",
+        "side": "client",
+        "description": "Cliente navega para a Central de Tarefas e localiza a tarefa de envio do mês corrente no calendário.",
+        "screenshot": "tela1.png",
+        "screenshotCaption": "Central de Tarefas"
+      },
+      {
+        "label": "Passo 3",
+        "title": "Seleciona a tarefa de envio",
+        "who": "Cliente",
+        "channel": "Hub do Empreendedor",
+        "side": "client",
+        "description": "Cliente clica na tarefa do mês e visualiza as contas pendentes com seus respectivos status (Pendente, Vencida, Rejeitado, Em análise, Concluído).",
+        "screenshot": "tela2.png",
+        "screenshotCaption": "Detalhe — contas e status"
+      },
+      {
+        "label": "Passo 4",
+        "title": "Faz upload dos documentos",
+        "who": "Cliente",
+        "channel": "Hub do Empreendedor",
+        "side": "client",
+        "description": "Cliente clica em uma conta, seleciona os arquivos (PDF, OFX, XLS/CSV) e faz upload pelo modal.",
+        "screenshot": "tela3.png",
+        "screenshotCaption": "Modal de upload"
+      },
+      {
+        "label": "Passo 5",
+        "title": "Confirma o envio",
+        "who": "Cliente",
+        "channel": "Hub do Empreendedor",
+        "side": "client",
+        "isFeedback": true,
+        "feedbackType": "success",
+        "description": "Após o upload, o status da conta muda para 'Em análise'. O cliente visualiza o feedback de envio confirmado.",
+        "suggestedScreen": true,
+        "suggestedScreenNote": "Status da conta atualizado para 'Em análise' — confirmação visual do recebimento"
+      },
+      {
+        "label": "",
+        "title": "Recebe e valida os documentos",
+        "who": "BHub (Contabilidade)",
+        "channel": "Interno",
+        "side": "bhub",
+        "description": "Equipe recebe os documentos, valida formato, período e legibilidade. Documento aprovado → 'Concluído'. Reprovado → 'Rejeitado' com motivo.",
+        "tip": "SLA interno: 2 dias úteis."
+      },
+      {
+        "label": "Passo 6",
+        "title": "Recebe feedback do envio",
+        "who": "BHub (automação)",
+        "channel": "Hub do Empreendedor",
+        "side": "client",
+        "isFeedback": true,
+        "feedbackType": "mixed",
+        "description": "Status de cada conta atualizado: Concluído (verde) ou Rejeitado (vermelho) com motivo. Cliente é notificado para corrigir pendências.",
+        "suggestedScreen": true,
+        "suggestedScreenNote": "Lista de contas com status final — Concluído ou Rejeitado com motivo visível"
+      }
+    ]
+  },
+  {
+    "id": "dados-bancarios",
+    "category": "Cadastro",
+    "icon": "🏦",
+    "title": "Atualização de Dados Bancários",
+    "subtitle": "Cadastro de nova conta no Hub do Empreendedor",
+    "description": "Como o cliente cadastra uma nova conta bancária no Hub do Empreendedor para vincular às operações mensais.",
+    "isIdeal": false,
+    "steps": [
+      {
+        "label": "Passo 1",
+        "title": "Acessa o Hub do Empreendedor",
+        "who": "Cliente",
+        "channel": "Hub do Empreendedor",
+        "side": "client",
+        "description": "Cliente faz login no Hub do Empreendedor e visualiza as tarefas e notificações na página inicial.",
+        "screenshot": "tela5.png",
+        "screenshotCaption": "Página inicial"
+      },
+      {
+        "label": "Passo 2",
+        "title": "Navega até Contas Bancárias",
+        "who": "Cliente",
+        "channel": "Hub do Empreendedor",
+        "side": "client",
+        "description": "Cliente acessa o menu 'Minha empresa' → 'Contas bancárias' e visualiza as contas já cadastradas.",
+        "screenshot": "tela6.png",
+        "screenshotCaption": "Listagem"
+      },
+      {
+        "label": "Passo 3",
+        "title": "Clica em 'Adicionar nova conta'",
+        "who": "Cliente",
+        "channel": "Hub do Empreendedor",
+        "side": "client",
+        "description": "Cliente clica no botão para adicionar nova conta. Um painel lateral abre com o formulário de cadastro.",
+        "screenshot": "tela7.png",
+        "screenshotCaption": "Formulário vazio"
+      },
+      {
+        "label": "Passo 4",
+        "title": "Preenche os dados e cadastra",
+        "who": "Cliente",
+        "channel": "Hub do Empreendedor",
+        "side": "client",
+        "description": "Cliente preenche banco, agência, conta e tipo (corrente/poupança) e clica em 'Cadastrar'.",
+        "screenshot": "tela4.png",
+        "screenshotCaption": "Preenchido"
+      },
+      {
+        "label": "Passo 5",
+        "title": "Recebe confirmação do cadastro",
+        "who": "BHub (automação)",
+        "channel": "Hub do Empreendedor",
+        "side": "client",
+        "isFeedback": true,
+        "feedbackType": "success",
+        "description": "Conta aparece na listagem com status ativo. Confirmação visual imediata.",
+        "suggestedScreen": true,
+        "suggestedScreenNote": "Conta nova listada com status 'Ativa' — feedback visual de cadastro concluído"
+      },
+      {
+        "label": "",
+        "title": "Conta vinculada às operações",
+        "who": "BHub (Contabilidade)",
+        "channel": "Interno",
+        "side": "bhub",
+        "description": "BHub recebe a notificação de nova conta e a inclui nas operações mensais a partir do próximo ciclo.",
+        "tip": "A conta passa a aparecer nas tarefas de envio de documentos do mês seguinte."
+      }
+    ]
+  },
+  {
+    "id": "mensal",
+    "category": "Rotina Mensal",
+    "icon": "📅",
+    "title": "Jornada Mensal do Cliente",
+    "subtitle": "Visão geral do mês típico — caminho feliz completo",
+    "description": "Panorama de um mês completo do cliente BHub: do envio de documentos ao fechamento contábil.",
+    "isIdeal": false,
+    "steps": [
+      {
+        "label": "Dia 1–5",
+        "title": "Envio de documentos",
+        "who": "Cliente",
+        "channel": "Hub do Empreendedor / E-mail",
+        "side": "client",
+        "description": "Cliente envia os extratos bancários, notas fiscais e demais documentos do mês anterior pelo Hub ou por e-mail.",
+        "tip": "Prazo recomendado: até o dia 5 do mês para garantir o fechamento no prazo."
+      },
+      {
+        "label": "",
+        "title": "Processamento e conciliação",
+        "who": "BHub (Contabilidade)",
+        "channel": "Interno",
+        "side": "bhub",
+        "description": "BHub realiza a conciliação bancária, apurações fiscais e lançamentos contábeis com base nos documentos recebidos."
+      },
+      {
+        "label": "",
+        "title": "Guias disponíveis para pagamento",
+        "who": "BHub (Automação)",
+        "channel": "Hub do Empreendedor / E-mail",
+        "side": "bhub",
+        "description": "Guias de impostos (DAS, DARF, etc.) são geradas e publicadas no Hub. Cliente é notificado por e-mail."
+      },
+      {
+        "label": "Dia 15–20",
+        "title": "Pagamento das guias",
+        "who": "Cliente",
+        "channel": "Banco (app / internet banking)",
+        "side": "client",
+        "description": "Cliente baixa os boletos ou copia os códigos de barras/PIX e realiza os pagamentos pelo app do banco.",
+        "tip": "Vencimentos variam por tipo de guia — DAS geralmente vence dia 20."
+      },
+      {
+        "label": "Dia 20–25",
+        "title": "Envio dos comprovantes",
+        "who": "Cliente",
+        "channel": "Hub do Empreendedor",
+        "side": "client",
+        "description": "Cliente faz upload dos comprovantes de pagamento no Hub do Empreendedor para registro e baixa contábil.",
+        "isFeedback": false
+      },
+      {
+        "label": "",
+        "title": "Fechamento contábil",
+        "who": "BHub (Contabilidade)",
+        "channel": "Hub do Empreendedor",
+        "side": "bhub",
+        "description": "BHub realiza o fechamento do mês: baixa dos impostos, geração de relatórios e balancetes. Documentos disponíveis no Hub."
+      }
+    ]
+  },
+  {
+    "id": "solicitacao-dp",
+    "category": "Departamento Pessoal",
+    "icon": "👤",
+    "title": "Solicitação de DP",
+    "subtitle": "Admissão, demissão, férias e outras solicitações de RH",
+    "description": "Como o cliente abre e acompanha uma solicitação de Departamento Pessoal pelo Hub do Empreendedor.",
+    "isIdeal": false,
+    "steps": [
+      {
+        "label": "Passo 1",
+        "title": "Acessa Solicitações no Hub",
+        "who": "Cliente",
+        "channel": "Hub do Empreendedor",
+        "side": "client",
+        "description": "Cliente faz login no Hub do Empreendedor, acessa o menu de Departamento Pessoal e clica em 'Nova solicitação'."
+      },
+      {
+        "label": "Passo 2",
+        "title": "Seleciona o tipo de solicitação",
+        "who": "Cliente",
+        "channel": "Hub do Empreendedor",
+        "side": "client",
+        "description": "Cliente escolhe o tipo: Admissão, Demissão, Férias, Alteração de salário, Afastamento ou Outro.",
+        "tip": "Cada tipo tem um formulário específico com documentos obrigatórios diferentes."
+      },
+      {
+        "label": "Passo 3",
+        "title": "Preenche o formulário e anexa documentos",
+        "who": "Cliente",
+        "channel": "Hub do Empreendedor",
+        "side": "client",
+        "description": "Cliente preenche os dados do funcionário e faz upload dos documentos necessários (RG, CPF, CTPS, etc.) conforme o tipo selecionado."
+      },
+      {
+        "label": "Passo 4",
+        "title": "Recebe confirmação do envio",
+        "who": "BHub (automação)",
+        "channel": "Hub do Empreendedor / E-mail",
+        "side": "client",
+        "isFeedback": true,
+        "feedbackType": "success",
+        "description": "Solicitação registrada com número de protocolo. Cliente recebe confirmação por e-mail com prazo de retorno.",
+        "suggestedScreen": true,
+        "suggestedScreenNote": "'Solicitação #1234 recebida. Prazo de retorno: 2 dias úteis.'"
+      },
+      {
+        "label": "",
+        "title": "Validação e processamento",
+        "who": "BHub (DP)",
+        "channel": "Interno",
+        "side": "bhub",
+        "description": "Equipe de DP valida os documentos enviados, processa a solicitação e gera os documentos de retorno (contrato, TRCT, aviso, etc.).",
+        "tip": "SLA: 2 dias úteis para solicitações completas."
+      },
+      {
+        "label": "Passo 5",
+        "title": "Recebe o resultado da solicitação",
+        "who": "BHub (DP)",
+        "channel": "Hub do Empreendedor / E-mail",
+        "side": "client",
+        "isFeedback": true,
+        "feedbackType": "final",
+        "description": "Documentos processados disponíveis para download no Hub. Cliente é notificado por e-mail com link direto.",
+        "suggestedScreen": true,
+        "suggestedScreenNote": "Solicitação #1234 — Status: Concluída. Documentos disponíveis para download."
+      }
+    ]
+  },
+  {
+    "id": "pagamento-guias",
+    "category": "Financeiro",
+    "icon": "💰",
+    "title": "Pagamento de Guias",
+    "subtitle": "Da apuração dos impostos ao comprovante registrado",
+    "description": "Fluxo completo de geração, notificação, pagamento e registro de comprovante das guias de impostos.",
+    "isIdeal": false,
+    "steps": [
+      {
+        "label": "",
+        "title": "Apuração dos impostos",
+        "who": "BHub (Contabilidade)",
+        "channel": "Interno",
+        "side": "bhub",
+        "description": "BHub realiza o cálculo dos impostos com base no faturamento e nos lançamentos do mês."
+      },
+      {
+        "label": "",
+        "title": "Guias publicadas no Hub",
+        "who": "BHub (Automação)",
+        "channel": "Hub do Empreendedor / E-mail",
+        "side": "bhub",
+        "description": "Guias geradas e publicadas no Hub do Empreendedor. Cliente notificado por e-mail com resumo de valores e vencimentos."
+      },
+      {
+        "label": "Passo 1",
+        "title": "Download das guias",
+        "who": "Cliente",
+        "channel": "Hub do Empreendedor",
+        "side": "client",
+        "description": "Cliente acessa o Hub do Empreendedor, navega até a seção de guias e faz o download dos boletos ou copia os códigos PIX/barras.",
+        "tip": "Guias ficam disponíveis com antecedência mínima de 5 dias úteis antes do vencimento."
+      },
+      {
+        "label": "Passo 2",
+        "title": "Pagamento pelo banco",
+        "who": "Cliente",
+        "channel": "Banco (app / internet banking)",
+        "side": "client",
+        "description": "Cliente realiza o pagamento pelo app ou internet banking do seu banco. Pode ser por código de barras, PIX ou boleto."
+      },
+      {
+        "label": "Passo 3",
+        "title": "Upload do comprovante",
+        "who": "Cliente",
+        "channel": "Hub do Empreendedor",
+        "side": "client",
+        "description": "Cliente retorna ao Hub e faz upload do comprovante de pagamento na guia correspondente.",
+        "tip": "Comprovante pode ser PDF ou imagem. O Hub aceita múltiplos formatos."
+      },
+      {
+        "label": "Passo 4",
+        "title": "Recebe confirmação do registro",
+        "who": "BHub (automação)",
+        "channel": "Hub do Empreendedor",
+        "side": "client",
+        "isFeedback": true,
+        "feedbackType": "success",
+        "description": "Status da guia muda para 'Comprovante enviado'. Aguarda baixa contábil.",
+        "suggestedScreen": true,
+        "suggestedScreenNote": "Guia com status 'Comprovante enviado' — aguardando confirmação da BHub"
+      },
+      {
+        "label": "",
+        "title": "Baixa contábil e registro",
+        "who": "BHub (Contabilidade)",
+        "channel": "Interno",
+        "side": "bhub",
+        "description": "BHub confere o comprovante, realiza a baixa contábil e atualiza o status da guia para 'Pago'. Lançamento registrado no balancete."
+      }
+    ]
+  }
+]
