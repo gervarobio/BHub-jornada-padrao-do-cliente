@@ -15,38 +15,43 @@ A ferramenta terá dois modos: **viewer** (navegar jornadas existentes) e **edit
 
 ## Estado atual
 
-**Fase:** Pré-desenvolvimento — documentação pronta, código ainda não começou.
+**Fase:** Fase 1 concluída — Viewer funcional, rodando em desenvolvimento.
+**Branch ativa:** `feat/fase-1-viewer`
 
 **O que existe:**
-- `docs/PRD.md` — requisitos e arquitetura completos
-- `docs/BACKLOG.md` — items priorizados por grupo e fase
-- `docs/DECISOES.md` — histórico de decisões tomadas
-- `_temp/prototipo.jsx` — protótipo v0.8 gerado no Claude Desktop (541 linhas, maioria base64)
-- `_temp/conversa.md` — transcrição da sessão no Claude Desktop que originou o protótipo
+- `docs/` — PRD v0.2, Backlog, Decisões, Sessão
+- `_temp/` — protótipo v0.8 e transcrição (referência, não editar)
+- `src/data/journeys.json` — 6 jornadas extraídas e expandidas do protótipo
+- `public/screenshots/` — 7 imagens extraídas do base64 (tela1.png–tela7.png)
+- `src/services/search.js` — TF-IDF local com slot para Claude API
+- `src/services/impact.js` — análise de impacto por regras simples com slot para Claude API
+- `src/components/Sidebar.jsx` — sidebar com busca TF-IDF e agrupamento por categoria
+- `src/components/Timeline.jsx` — swimlane 3 colunas (cliente | timeline | BHub)
+- `src/components/ClientCard.jsx` — card expandível com screenshot, feedback badges, lightbox
+- `src/components/BHubCard.jsx` — card discreto (linha fina colapsado, expandido full)
+- `src/components/BranchView.jsx` — ramificação visual em grid 2 colunas
+- `src/components/ScreenshotViewer.jsx` — lightbox de tela cheia
+- `src/App.jsx` — app principal com header de jornada e legenda de feedback
 
 **O que ainda não existe:**
-- Projeto React/Vite
-- Nenhum componente implementado
-- `journeys.json` (dados ainda estão hardcoded no protótipo)
-- Screenshots como arquivos (ainda estão como base64 no protótipo)
+- Editor de jornadas (Fase 2: B-001 a B-006)
+- Upload de screenshot (B-003)
+- Mapeamento de impacto na UI (Fase 3: B-009 a B-011)
+- Export/Import JSON (Fase 3: B-013 a B-015)
 
 ---
 
 ## Próximo passo imediato
 
-**Fase 1 — Viewer (MVP)**
+**Fase 2 — Editor**
 
-1. Criar projeto Vite + React
-2. Extrair dados do `_temp/prototipo.jsx` para `src/data/journeys.json`
-3. Extrair imagens base64 para arquivos em `public/screenshots/`
-4. Implementar componentes do viewer fiel ao visual v0.8:
-   - `Sidebar.jsx`
-   - `Timeline.jsx` (swimlane 3 colunas)
-   - `ClientCard.jsx`
-   - `BHubCard.jsx`
-   - `BranchView.jsx`
-   - `ScreenshotViewer.jsx` (lightbox)
-5. `App.jsx` com estado e roteamento entre jornadas
+Começar pelo B-006 (criar jornada) + B-001 (criar step) + B-002 (editar step inline) + B-003 (upload screenshot).
+
+Fluxo sugerido:
+1. Botão "Nova jornada" e "Editar" na interface principal
+2. Modal/painel de edição de jornada (metadados)
+3. Formulário de step inline na timeline
+4. Upload de imagem por step
 
 ---
 

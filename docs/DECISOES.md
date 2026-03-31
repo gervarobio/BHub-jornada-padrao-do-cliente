@@ -100,6 +100,24 @@
 
 ---
 
+### [21:45] Fase 1 — Viewer implementado
+
+**Contexto:** Início do desenvolvimento real. Projeto React/Vite criado e Fase 1 (viewer) construída do zero.
+
+**Decisão:** Scaffolding do Vite feito em `/tmp` e copiado para o repo (diretório não-vazio impede criação direta). Arquivos boilerplate do Vite removidos (App.css, assets/).
+
+**O que foi construído:**
+- 7 screenshots extraídas de base64 para arquivos PNG em `public/screenshots/`
+- 6 jornadas extraídas e expandidas para `src/data/journeys.json`
+- `src/services/search.js` — TF-IDF local com interface plugável para Claude API
+- `src/services/impact.js` — análise de impacto por regras simples, interface plugável
+- Todos os componentes do viewer fiéis ao visual v0.8 do protótipo
+- Build de produção limpo: 230KB JS, 0.18KB CSS
+
+**Impacto:** Fase 1 concluída. Branch `feat/fase-1-viewer` pronta para merge/review.
+
+---
+
 ### [21:28] PRD alinhado ao backlog (v0.1 → v0.2)
 
 **Contexto:** O backlog foi construído com mais detalhe do que o PRD original, criando divergências em 6 pontos.
