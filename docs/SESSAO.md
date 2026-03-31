@@ -15,8 +15,8 @@ A ferramenta terá dois modos: **viewer** (navegar jornadas existentes) e **edit
 
 ## Estado atual
 
-**Fase:** Fase 1 concluída — Viewer funcional. Aguardando início da Fase 2.
-**Branch ativa:** `feat/fase-1-viewer` (não mergeada — aguarda pedido explícito)
+**Fase:** Fase 2 concluída. Iniciando Fase 3.
+**Branch ativa:** `main`
 
 **O que existe:**
 - `docs/` — PRD v0.2, Backlog, Decisões, Sessão
@@ -25,36 +25,41 @@ A ferramenta terá dois modos: **viewer** (navegar jornadas existentes) e **edit
 - `public/screenshots/` — 7 imagens extraídas do base64 (tela1.png–tela7.png)
 - `src/services/search.js` — TF-IDF local com slot para Claude API
 - `src/services/impact.js` — análise de impacto por regras simples com slot para Claude API
-- `src/components/Sidebar.jsx` — sidebar com busca TF-IDF e agrupamento por categoria
-- `src/components/Timeline.jsx` — swimlane 3 colunas (cliente | timeline | BHub)
+- `src/components/Sidebar.jsx` — sidebar com busca TF-IDF, agrupamento por categoria, botão "+ Nova jornada"
+- `src/components/Timeline.jsx` — swimlane 4 colunas (humor | cliente | timeline | BHub) + modo edição com drag-and-drop nativo e trilha de humor
 - `src/components/ClientCard.jsx` — card expandível com screenshot, feedback badges, lightbox
 - `src/components/BHubCard.jsx` — card discreto (linha fina colapsado, expandido full)
 - `src/components/BranchView.jsx` — ramificação visual em grid 2 colunas
 - `src/components/ScreenshotViewer.jsx` — lightbox de tela cheia
-- `src/App.jsx` — app principal com header de jornada e legenda de feedback
+- `src/hooks/useJourneys.js` — estado global, persistência em localStorage, CRUD de jornadas e steps (incluindo moveStep)
+- `src/components/editor/JourneyEditor.jsx` — modal de criar/editar metadados da jornada
+- `src/components/editor/StepEditor.jsx` — formulário inline de criar/editar step
+- `src/App.jsx` — app principal com todos os modos integrados
+
+**B-001 a B-006 concluídos** (criar/editar/excluir step, screenshot, drag-and-drop, criar/editar jornada).
+
+**Bug fix:** modo edição redesenhado — barra de ações fina acima de cada step substitui botões absolutos que sobrepunham conteúdo dos cards.
+
+**Nova feature:** trilha de humor do cliente — coluna 44px à esquerda com emojis por step. Popover inline (grid de 10 emojis + descrição + salvar/limpar). Dados: `moodEmoji` + `moodNote` no step.
 
 **O que ainda não existe:**
-- Editor de jornadas (Fase 2: B-001 a B-006)
-- Upload de screenshot (B-003)
 - Mapeamento de impacto na UI (Fase 3: B-009 a B-011)
 - Export/Import JSON (Fase 3: B-013 a B-015)
 - Export como documento de requisitos (Fase 3: B-018)
 - Protótipo navegável (Fase 4: B-019)
+- Import de fluxo visual / texto / geração por IA (B-021 a B-023)
 - Integração com repositórios (Fase 5: B-020)
 
 ---
 
 ## Próximo passo imediato
 
-**Fase 2 — Editor**
+**Fase 3**
 
-Começar pelo B-006 (criar jornada) + B-001 (criar step) + B-002 (editar step inline) + B-003 (upload screenshot).
-
-Fluxo sugerido:
-1. Botão "Nova jornada" e "Editar" na interface principal
-2. Modal/painel de edição de jornada (metadados)
-3. Formulário de step inline na timeline
-4. Upload de imagem por step
+Próximos itens (por prioridade):
+- B-013/B-014: export e import JSON da jornada
+- B-009/B-010: mapeamento de impacto na UI (detecção de referências cruzadas + alerta ao excluir)
+- B-018: export como documento de requisitos (.md)
 
 ---
 

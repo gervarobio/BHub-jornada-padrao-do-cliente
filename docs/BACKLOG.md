@@ -1,7 +1,7 @@
 # Backlog — Mapa de Jornadas Padrão BHub
 
 **Status:** Ativo
-**Última atualização:** 2026-03-30 (B-018 a B-020 adicionados)
+**Última atualização:** 2026-03-31 (B-024 adicionado)
 
 > Items são ordenados por prioridade dentro de cada grupo. Use os status: `[ ]` a fazer · `[~]` em andamento · `[x]` concluído.
 
@@ -22,7 +22,7 @@ O usuário pode adicionar um novo step a uma jornada existente. Ao clicar em "Ad
 - Todos os campos opcionais podem ser deixados em branco
 - Novo step recebe numeração automática se for do tipo "Passo N"
 
-**Status:** `[ ]`
+**Status:** `[x]`
 
 ---
 
@@ -37,7 +37,7 @@ O usuário pode clicar em qualquer step e editar seus campos inline, sem sair da
 - Alterações são refletidas na timeline em tempo real
 - Usuário pode cancelar a edição sem salvar
 
-**Status:** `[ ]`
+**Status:** `[x]`
 
 ---
 
@@ -57,7 +57,7 @@ Ao criar ou editar um step do lado do cliente, o usuário pode fazer upload de u
 - Preview da imagem aparece imediatamente após o upload
 - Imagem persiste após recarregar a página
 
-**Status:** `[ ]`
+**Status:** `[x]`
 
 ---
 
@@ -67,7 +67,7 @@ Ao criar ou editar um step do lado do cliente, o usuário pode fazer upload de u
 
 O usuário pode arrastar steps para reordenar dentro de uma jornada. A numeração dos "Passo N" é recalculada automaticamente.
 
-**Status:** `[ ]`
+**Status:** `[x]`
 
 ---
 
@@ -79,7 +79,7 @@ Botão de exclusão disponível no modo de edição do step. Exige confirmação
 
 **Dependência:** B-007 (Mapeamento de impacto) — ao excluir, deve verificar se o step é referenciado em outra jornada antes de confirmar.
 
-**Status:** `[ ]`
+**Status:** `[x]`
 
 ---
 
@@ -93,6 +93,30 @@ O usuário pode criar uma nova jornada preenchendo: nome, subtítulo, categoria 
 - Nova jornada aparece na sidebar na categoria correta
 - Jornada pode ser renomeada ou ter categoria alterada a qualquer momento
 - Jornada vazia exibe mensagem orientando a adicionar o primeiro step
+
+**Status:** `[x]`
+
+---
+
+### B-024 — Modo de preenchimento rápido (estilo planilha)
+**Prioridade:** Alta
+**Fase:** 2
+
+A primeira experiência de preenchimento de uma jornada deve ser leve e rápida, como editar uma planilha. O usuário clica numa caixinha (step), edita o campo diretamente ali, aperta Tab para ir para o próximo campo e continua sem interrupções. Não deve aparecer um formulário cheio de campos logo de cara.
+
+**Como funciona:**
+- Card em modo edição exibe apenas os campos essenciais inline (título, lado, tipo) — sem painel lateral completo
+- Tab navega entre campos do card atual e, ao sair do último campo, avança para o próximo card
+- Botão "Ver detalhes" (ícone discreto no card) abre o formulário completo com todos os campos opcionais (canal, responsável, dica, screenshot etc.)
+- Adicionar novo step via botão "+" também coloca o card já em modo de edição rápida, pronto para digitar
+
+**Critério de aceite:**
+- Clicar num card já o coloca em modo edição sem etapa extra
+- Tab percorre os campos essenciais dentro do card e avança para o próximo card ao final
+- Usuário consegue preencher uma jornada de 6 steps com título e tipo sem abrir nenhum modal
+- O botão "Ver detalhes" está visível mas não é o caminho obrigatório
+
+**Motivação:** quem preenche uma jornada pela primeira vez se perde se já tiver um formulário longo. A entrada rápida remove essa barreira — os detalhes existem, mas ficam em segundo plano.
 
 **Status:** `[ ]`
 
@@ -325,6 +349,74 @@ Conectar steps de uma jornada com telas ou features já implementadas nos reposi
 
 ---
 
+### B-021 — Import de fluxo visual (flowchart / Excalidraw)
+**Prioridade:** Média
+**Fase:** 4
+
+O usuário importa um diagrama de fluxo (ex: arquivo `.excalidraw`, `.drawio` ou imagem de um flowchart) e a ferramenta converte automaticamente os nós e arestas em steps da jornada.
+
+**Como funciona:**
+- Para formatos estruturados (`.excalidraw`, `.drawio`): parse direto dos nós/arestas para o schema de steps
+- Para imagem: envio para Claude API para interpretação visual e extração da estrutura
+- Ramificações no fluxo viram steps do tipo "ramificação" com dois caminhos
+
+**Critério de aceite:**
+- Upload do arquivo abre um preview do fluxo interpretado antes de confirmar a importação
+- Usuário pode ajustar o mapeamento (ex: renomear steps, corrigir lados cliente/BHub) antes de salvar
+- Steps sem informação suficiente aparecem com alerta para preenchimento manual
+
+**Status:** `[ ]`
+
+---
+
+### B-022 — Import de texto linha a linha
+**Prioridade:** Média
+**Fase:** 3
+
+O usuário cola ou faz upload de um arquivo de texto simples onde cada linha (ou parágrafo) descreve um step da jornada. A ferramenta converte o texto em steps estruturados.
+
+**Formato esperado (exemplo):**
+```
+Cliente envia documentos pelo Hub do Empreendedor
+BHub recebe e faz triagem automática
+Se documentos OK: segue para análise
+Se documentos com pendência: notificação enviada ao cliente por e-mail
+```
+
+**Como funciona:**
+- Parse linha a linha com heurísticas simples para detectar lado (cliente vs. BHub), ramificações (palavras-chave "se", "caso", "quando") e canal (menção a "e-mail", "Hub", "WhatsApp")
+- Opção avançada: envia o texto para Claude API (claude-haiku) para extração semântica mais precisa dos campos
+
+**Critério de aceite:**
+- Importação disponível no fluxo de criação de nova jornada
+- Preview dos steps extraídos antes de confirmar
+- Usuário pode editar cada step individualmente antes de salvar
+
+**Status:** `[ ]`
+
+---
+
+### B-023 — Geração de jornada por descrição em linguagem natural
+**Prioridade:** Baixa
+**Fase:** 4
+
+O usuário descreve livremente o que precisa em um campo de texto corrido (ex: "Preciso mapear o fluxo em que o cliente solicita uma segunda via do boleto pelo app e o time financeiro processa o pedido") e a ferramenta usa a Claude API para gerar um rascunho completo da jornada — steps, lados, canais e tipos preenchidos automaticamente.
+
+**Como funciona:**
+- Prompt enviado para Claude API com o schema de jornada como output estruturado (JSON)
+- Resultado exibido como rascunho editável na timeline antes de salvar
+- Usuário pode regenerar, aceitar parcialmente ou descartar
+
+**Critério de aceite:**
+- Campo de texto na tela de criação de nova jornada, com botão "Gerar com IA"
+- Rascunho gerado inclui pelo menos título, steps com título e lado, e tipo correto (ação, feedback, ramificação)
+- Usuário pode iterar: adicionar contexto e regenerar até ficar satisfeito
+- Custo de API visível (ex: estimativa de tokens) antes de confirmar a geração
+
+**Status:** `[ ]`
+
+---
+
 ## Decisões pendentes antes de implementar
 
 | Item | Pergunta | Impacta |
@@ -332,6 +424,8 @@ Conectar steps de uma jornada com telas ou features já implementadas nos reposi
 | B-003 | Screenshots ficam no repositório git ou em storage externo? | Deploy e colaboração |
 | B-009 | Relacionamentos são definidos manualmente ou inferidos automaticamente? | Complexidade de implementação |
 | B-020 | Qual abordagem de integração com repositórios começa: link manual, GitHub API ou export para ferramenta de design? | Escopo e complexidade da Fase 5 |
+| B-021 | Quais formatos de flowchart suportar primeiro: `.excalidraw`, `.drawio` ou apenas imagem via Claude? | Complexidade de parse e dependência de API |
+| B-023 | Output estruturado da geração por linguagem natural deve usar JSON mode da API ou parsing heurístico da resposta? | Confiabilidade do rascunho gerado |
 
 ---
 

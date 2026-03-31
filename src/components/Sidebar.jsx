@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { search } from "../services/search";
 
-export default function Sidebar({ journeys, selectedId, onSelect, isOpen, onToggle }) {
+export default function Sidebar({ journeys, selectedId, onSelect, isOpen, onToggle, onNewJourney }) {
   const [query, setQuery] = useState("");
 
   const filtered = query.trim().length >= 2
@@ -159,6 +159,31 @@ export default function Sidebar({ journeys, selectedId, onSelect, isOpen, onTogg
           textAlign: "center",
         }}>
           {journeys.length} jornadas · v1.0
+        </div>
+
+        {/* Botão nova jornada */}
+        <div style={{ padding: "10px 14px" }}>
+          <button
+            onClick={onNewJourney}
+            style={{
+              width: "100%", padding: "9px 0", borderRadius: 8,
+              fontSize: 12, fontWeight: 600,
+              background: "rgba(30,144,255,0.08)",
+              border: "1px dashed rgba(30,144,255,0.25)",
+              color: "#60A5FA", cursor: "pointer", fontFamily: "inherit",
+              transition: "all 0.2s",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "rgba(30,144,255,0.14)";
+              e.currentTarget.style.borderColor = "rgba(30,144,255,0.45)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "rgba(30,144,255,0.08)";
+              e.currentTarget.style.borderColor = "rgba(30,144,255,0.25)";
+            }}
+          >
+            + Nova jornada
+          </button>
         </div>
       </div>
 
